@@ -4,6 +4,7 @@ const PORT = process.env.PORT || 3000;
 
 let secretWord = "casa";
 
+// 🟩🟨⬛ lógica tipo Wordle
 function checkGuess(guess, word) {
     guess = guess.toLowerCase();
     word = word.toLowerCase();
@@ -21,11 +22,14 @@ function checkGuess(guess, word) {
     return result;
 }
 
+// Endpoint para adivinar
 app.get("/guess", (req, res) => {
     const user = req.query.user;
     const guess = req.query.word;
 
-    if (!guess || guess.length !== secretWord.length) {
+    if (!guess) return res.send("Debes escribir una palabra.");
+
+    if (guess.length !== secretWord.length) {
         return res.send(`${user}, la palabra debe tener ${secretWord.length} letras.`);
     }
 
@@ -48,15 +52,10 @@ app.get("/setword", (req, res) => {
         return res.send("No tienes permiso para cambiar la palabra.");
     }
 
-    if (!newWord || newWord.length !== secretWord.length) {
-        return res.send(`La palabra debe tener ${secretWord.length} letras.`);
+    if (!newWord || newWord.length < 3) {
+        return res.send("La palabra debe tener al menos 3 letras.");
     }
 
     secretWord = newWord.toLowerCase();
-    return res.send(`Palabra actualizada a "${secretWord}". ¡Que empiece el juego!`);
-});
-
-
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    return res.send(`Nueva palabra establecida. Tiene ${secretWord.length} letras. ¡Suerte!`);
 });
