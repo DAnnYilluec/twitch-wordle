@@ -59,3 +59,7 @@ app.get("/setword", (req, res) => {
     secretWord = newWord.toLowerCase();
     return res.send(`Nueva palabra establecida. Tiene ${secretWord.length} letras. ¡Suerte!`);
 });
+
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
