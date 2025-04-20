@@ -38,6 +38,25 @@ app.get("/guess", (req, res) => {
     return res.send(`${user}: ${result}`);
 });
 
+app.get("/setword", (req, res) => {
+    const newWord = req.query.word;
+    const user = req.query.user;
+
+    const allowedUsers = ["ItsNa7e", "olli3ver", "nabo_de_dios", "DAnnYilluec"];
+
+    if (!allowedUsers.map(u => u.toLowerCase()).includes(user.toLowerCase())) {
+        return res.send("No tienes permiso para cambiar la palabra.");
+    }
+
+    if (!newWord || newWord.length !== secretWord.length) {
+        return res.send(`La palabra debe tener ${secretWord.length} letras.`);
+    }
+
+    secretWord = newWord.toLowerCase();
+    return res.send(`Palabra actualizada a "${secretWord}". ¡Que empiece el juego!`);
+});
+
+
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
