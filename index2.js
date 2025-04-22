@@ -15,7 +15,9 @@ function generarCarta() {
     let ases = 0;
   
     for (let carta of cartas) {
-      let valor = carta.slice(0, -1); // quita el palo
+        let valor = carta.match(/^[A-Z0-9]+/)[0];
+
+        // quita el palo
   
       if (["J", "Q", "K"].includes(valor)) {
         total += 10;
