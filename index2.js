@@ -143,9 +143,9 @@ Utilise !pedir ou !plantar.`);
     let resultado = "";
   
     if (crupierTotal > 21 || jugadorTotal > crupierTotal) {
-      resultado = `¡Ganaste! 🎉`;
+      resultado = `Félicitations, vous avez gagné!🎉`;
     } else if (jugadorTotal < crupierTotal) {
-      resultado = `Perdiste 😢`;
+      resultado = `Tu as perdu, imbécile, jajajaj otra partida, o te rindes?`;
     } else {
       resultado = `¡Empate! 🤝`;
     }
