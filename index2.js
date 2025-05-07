@@ -63,10 +63,11 @@ app.get("/blackjack", (req, res) => {
   
     if (total === 21) {
       partidas[user].terminado = true;
-      return res.send(`¡${user}, tienes BLACKJACK con ${carta1} y ${carta2}! 🎉`);
+      return res.send(`¡${user}, tu as un blackjack avec ${carta1} y ${carta2}! 🎉`);
     }
   
-    return res.send(`${user}, tus cartas: ${carta1} ${carta2} (Total: ${total}). Usa !pedir o !plantar.`);
+    return res.send(`${user}, tes lettres: ${carta1} ${carta2} (Total: ${total}). 
+Utilise !pedir ou !plantar.`);
   });
   
   app.listen(PORT, () => {
@@ -94,7 +95,7 @@ app.get("/blackjack", (req, res) => {
   
     if (partida.totalJugador > 21) {
       partida.terminado = true;
-      return res.send(`${user}, recibiste ${nuevaCarta} y ahora tienes ${partida.totalJugador}. ¡Te pasaste! 💥`);
+      return res.send(`${user}, recibiste ${nuevaCarta} y ahora tienes ${partida.totalJugador}. Tu es allé trop loin, idiot ! 💥`);
     }
   
     if (partida.totalJugador === 21) {
