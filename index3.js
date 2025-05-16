@@ -36,7 +36,7 @@ function jugarTragaperras(user) {
 
   users[user].monedas--;
 
-  const simbolos = ['🍒', '🍋', '🍇', '7'];
+  const simbolos = ['🍒', '🍋', '🍇', '7️⃣'];
   const tirada = [
     simbolos[Math.floor(Math.random() * simbolos.length)],
     simbolos[Math.floor(Math.random() * simbolos.length)],
