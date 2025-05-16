@@ -4,7 +4,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const DATA_FILE = './users.json';
-const ADMIN = 'DAnnYilluec'; // Cambia esto por tu nombre de usuario en Twitch
+const ADMINS = ['dannyilluec', 'olliv3er']; // Usuarios autorizados a usar /dar
 
 function getUsers() {
   if (!fs.existsSync(DATA_FILE)) return {};
@@ -18,7 +18,7 @@ function saveUsers(users) {
 function inicializarUsuario(user) {
   const users = getUsers();
   if (!users[user]) {
-    users[user] = { monedas: 10 };
+    users[user] = { monedas: 20 };
     saveUsers(users);
   }
 }
@@ -27,7 +27,7 @@ function jugarTragaperras(user) {
   let users = getUsers();
 
   if (!users[user]) {
-    users[user] = { monedas: 50 };
+    users[user] = { monedas: 20 };
   }
 
   if (users[user].monedas <= 0) {
@@ -45,14 +45,17 @@ function jugarTragaperras(user) {
 
   let mensaje = `${tirada.join(' ')}`;
 
+  // Comprobar si los tres símbolos son iguales
   if (tirada[0] === tirada[1] && tirada[1] === tirada[2]) {
-    users[user].monedas += 10;
-    mensaje += ` +10 monedas. Ahora tienes ${users[user].monedas} monedas.`;
-  } else if (tirada[0] === tirada[1] || tirada[1] === tirada[2] || tirada[0] === tirada[2]) {
-    users[user].monedas += 3;
-    mensaje += ` +3 monedas. Ahora tienes ${users[user].monedas} monedas.`;
+    if (tirada[0] === '7') {
+      users[user].monedas += 50;
+      mensaje += ` ¡JACKPOT! 🎉 +50. Ahora tienes ${users[user].monedas} monedas.`;
+    } else {
+      users[user].monedas += 10;
+      mensaje += ` +10. Ahora tienes ${users[user].monedas} monedas.`;
+    }
   } else {
-    mensaje += `Te quedan ${users[user].monedas} monedas.`;
+    mensaje += `  Te quedan ${users[user].monedas} monedas.`;
   }
 
   saveUsers(users);
@@ -62,24 +65,24 @@ function jugarTragaperras(user) {
 function verMonedas(user) {
   let users = getUsers();
   if (!users[user]) {
-    users[user] = { monedas: 50 };
+    users[user] = { monedas: 20 };
     saveUsers(users);
   }
   return `@${user} tienes ${users[user].monedas} monedas.`;
 }
 
 function darMonedas(admin, usuario, cantidad) {
-  if (admin.toLowerCase() !== ADMIN.toLowerCase()) {
+  if (!ADMINS.includes(admin.toLowerCase())) {
     return `@${admin}, no tienes permiso para dar monedas.`;
   }
 
   if (!usuario || isNaN(cantidad) || cantidad <= 0) {
-    return `Parámetros inválidos. Usa: /dar?admin=${ADMIN}&usuario=nombre&cantidad=10`;
+    return `Parámetros inválidos. Usa: /dar?admin=nombre&usuario=nombre&cantidad=10`;
   }
 
   let users = getUsers();
   if (!users[usuario]) {
-    users[usuario] = { monedas: 50 };
+    users[usuario] = { monedas: 10 };
   }
 
   users[usuario].monedas += parseInt(cantidad);
@@ -101,7 +104,7 @@ app.get('/monedas', (req, res) => {
   res.send(verMonedas(user));
 });
 
-// Endpoint para dar monedas (solo admin)
+// Endpoint para dar monedas (solo admins)
 app.get('/dar', (req, res) => {
   const admin = (req.query.admin || '').toLowerCase();
   const usuario = (req.query.usuario || '').toLowerCase();
