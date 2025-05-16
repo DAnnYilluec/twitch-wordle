@@ -4,7 +4,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const DATA_FILE = './users.json';
-const ADMINS = ['dannyilluec', 'olliv3er']; // Usuarios autorizados a usar /dar
+const ADMINS = ['dannyilluec', 'olli3ver']; // Usuarios autorizados a usar /dar
 
 function getUsers() {
   if (!fs.existsSync(DATA_FILE)) return {};
