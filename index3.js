@@ -18,7 +18,7 @@ function saveUsers(users) {
 function inicializarUsuario(user) {
   const users = getUsers();
   if (!users[user]) {
-    users[user] = { monedas: 50 };
+    users[user] = { monedas: 10 };
     saveUsers(users);
   }
 }
@@ -43,7 +43,7 @@ function jugarTragaperras(user) {
     simbolos[Math.floor(Math.random() * simbolos.length)]
   ];
 
-  let mensaje = `@${user} tiró: ${tirada.join(' ')}`;
+  let mensaje = `${tirada.join(' ')}`;
 
   if (tirada[0] === tirada[1] && tirada[1] === tirada[2]) {
     users[user].monedas += 10;
