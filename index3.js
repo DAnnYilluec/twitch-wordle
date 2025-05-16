@@ -47,12 +47,12 @@ function jugarTragaperras(user) {
 
   if (tirada[0] === tirada[1] && tirada[1] === tirada[2]) {
     users[user].monedas += 10;
-    mensaje += ` ¡Ganaste! +10 monedas. Ahora tienes ${users[user].monedas} monedas.`;
+    mensaje += ` +10 monedas. Ahora tienes ${users[user].monedas} monedas.`;
   } else if (tirada[0] === tirada[1] || tirada[1] === tirada[2] || tirada[0] === tirada[2]) {
     users[user].monedas += 3;
-    mensaje += ` ¡Casi! +3 monedas. Ahora tienes ${users[user].monedas} monedas.`;
+    mensaje += ` +3 monedas. Ahora tienes ${users[user].monedas} monedas.`;
   } else {
-    mensaje += ` Mala suerte. Te quedan ${users[user].monedas} monedas.`;
+    mensaje += `Te quedan ${users[user].monedas} monedas.`;
   }
 
   saveUsers(users);
